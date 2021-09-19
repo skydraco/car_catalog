@@ -1,0 +1,72 @@
+<div class="wrapper container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" class="th-numb" >#</th>
+            <th>Марка</th>
+            <th>Модель</th>
+            <th>Руль</th>
+            <th>Инструменты</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for index, item in data %}
+            <tr data-row="{{  item.id  }}" class="request-form">
+                <td scope="row" class="td-numb">
+                    <div class="item-group numb">
+                        <input class="form-control" name='index' value="{{ item.id }}" type="hidden" disabled/>
+                        <div class="error-message"></div>
+                        <input class="form-control" value="{{  index+1 }}" disabled/>
+                    </div>
+                </td>
+                <td>
+                    <div class="item-group">
+                        <input class="form-control" name='brand' value="{{ item.brandId.name }}" />
+                        <div class="error-message"></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="item-group">
+                        <input class="form-control" name='model' value="{{ item.modelId.name }}" />
+                        <div class="error-message"></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="item-group">
+                        <select class="form-control" name='roule'>
+                            <option disabled>Положение руля </option>
+                            <option value="0" {{ item.roule == 0 ? 'selected' : '' }}>Правый</option>
+                            <option value="1" {{ item.roule == 1 ? 'selected' : '' }}>Левый</option>
+                        </select>
+                        <div class="error-message"></div>
+                    </div>
+                </td>
+                <td class="td-btn">
+                    <input id='ed-{{ item.id }}'data-param="edit" type="button"/>
+                    <label for="ed-{{ item.id }}"><i class="fas fa-save"></i></label>
+                    <input id='rm-{{ item.id }}' data-param="remove" type="button"/>
+                    <label for="rm-{{ item.id }}"><i class="fas fa-trash"></i></label>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+<script type="module">
+    import { onClickItemOperation, onClickItemRemove } from '{{ asset('js/main.min.js') }}'
+    let itemsEdit = document.querySelectorAll('[data-param="edit"]');
+    let itemsRemove = document.querySelectorAll('[data-param="remove"]');
+    itemsEdit.forEach( function(itemEdit) {
+        itemEdit.addEventListener('click', async function(event) {
+            onClickItemOperation(event, '/admin/catalog/edit');
+        });
+    });
+
+    itemsRemove.forEach( function(itemRemove) {
+        itemRemove.addEventListener('click', async function (event) {
+            onClickItemRemove(event)
+        });
+    });
+</script>

@@ -1,0 +1,48 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <div class="container-fluid ">
+                <a class="navbar-brand" href="#"><i class="fas fa-car-crash"></i> Каталог автомобилей</a>
+               {% if (admin) %}
+                <div class="menu">
+                    <div class="menu-item">
+                        <a href="#" onclick="onClickDownLoader(event)">Выгрузка данных</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="link-admin">
+                <div class="link-admin-cont">
+                    {% if (admin) %}
+                        <a href="/">Вернуться на главную</a>
+                    {% else %}
+                        <a href="/admin/catalog" >Личный кабинет</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% if (admin) %}
+    <script>
+        async function onClickDownLoader(event) {
+            event.preventDefault();
+            const path = '/data/';
+            let response = await fetch('/admin/catalog/api/datafile');
+            let result = await response.json();
+            let file = result.file;
+            saveData((path + file), file);
+        }
+
+        function saveData(url, fileName)
+        {
+            let a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+    {% endif %}
+</header>

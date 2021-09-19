@@ -1,0 +1,48 @@
+<div class="footer">
+    <div class="form-create position-bottom">
+        <div class="container">
+            <table class="table">
+                <tbody>
+                <tr data-row="0" class="request-form">
+                    <td scope="row" class="td-numb">
+                        <div class="item-group numb">
+                            <input class="form-control" value="{{ data|length + 1 }}" disabled/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item-group">
+                            <input class="form-control" name='brand' value="" placeholder="Марка авто"/>
+                            <div class="error-message"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item-group">
+                            <input class="form-control" name='model' value="" placeholder="Модель авто"/>
+                            <div class="error-message"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="item-group">
+                            <select class="form-control" name='roule'>
+                                <option disabled>Положение руля </option>
+                                <option value="0" selected>Правый</option>
+                                <option value="1">Левый</option>
+                            </select>
+                            <div class="error-message"></div>
+                        </div>
+                    </td>
+                    <td class="td-btn">
+                        <button data-create type="button" class="btn btn-dark">Добавить</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { onClickItemCreate } from '{{ asset('js/main.min.js') }}';
+    document.querySelector('[data-create]').addEventListener('click', onClickItemCreate);
+</script>
